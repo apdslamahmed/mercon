@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة بيكسلات التتبع - لوحة التحكم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .pixels-container {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 2rem;
+        }
+
+        .pixel-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pixel-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pixel-icon {
+            font-size: 2rem;
+            margin-left: 1rem;
+        }
+
+        .pixel-status {
+            margin-right: auto;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .pixel-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+        .pixel-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body class="dashboard">
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/logo.png" alt="شعار الموقع" class="logo">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="dashboard-product.html"><i class="fas fa-box"></i> المنتجات</a></li>
+                    <li><a href="orders.html"><i class="fas fa-shopping-cart"></i> الطلبات</a></li>
+                    <li><a href="customers.html"><i class="fas fa-users"></i> العملاء</a></li>
+                    <li class="active"><a href="pixels.html"><i class="fas fa-code"></i> البيكسلات</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button onclick="adminLogout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+                <a href="index.html" class="btn-view-site" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    عرض الموقع
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="pixels-container">
+                <h1>إدارة بيكسلات التتبع</h1>
+                
+                <!-- بيكسل فيسبوك -->
+                <div class="pixel-card">
+                    <div class="pixel-header">
+                        <i class="fab fa-facebook pixel-icon" style="color: #1877f2;"></i>
+                        <h2>بيكسل فيسبوك</h2>
+                        <span class="pixel-status status-inactive" id="fb-pixel-status">غير نشط</span>
+                    </div>
+                    <div class="pixel-form">
+                        <div class="form-group">
+                            <label for="fb-pixel-id">معرف بيكسل فيسبوك</label>
+                            <input type="text" id="fb-pixel-id" placeholder="أدخل معرف بيكسل فيسبوك">
+                        </div>
+                        <button class="btn-save" onclick="saveFacebookPixel()">حفظ وتفعيل</button>
+                    </div>
+                    <div class="pixel-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="fb-conversions">0</div>
+                            <div class="stat-label">التحويلات</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="fb-pageviews">0</div>
+                            <div class="stat-label">مشاهدات الصفحة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بيكسل تيك توك -->
+                <div class="pixel-card">
+                    <div class="pixel-header">
+                        <i class="fab fa-tiktok pixel-icon"></i>
+                        <h2>بيكسل تيك توك</h2>
+                        <span class="pixel-status status-inactive" id="tt-pixel-status">غير نشط</span>
+                    </div>
+                    <div class="pixel-form">
+                        <div class="form-group">
+                            <label for="tt-pixel-id">معرف بيكسل تيك توك</label>
+                            <input type="text" id="tt-pixel-id" placeholder="أدخل معرف بيكسل تيك توك">
+                        </div>
+                        <button class="btn-save" onclick="saveTikTokPixel()">حفظ وتفعيل</button>
+                    </div>
+                    <div class="pixel-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="tt-conversions">0</div>
+                            <div class="stat-label">التحويلات</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="tt-pageviews">0</div>
+                            <div class="stat-label">مشاهدات الصفحة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/pixels.js"></script>
+</body>
+</html>
