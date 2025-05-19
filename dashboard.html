@@ -6,6 +6,7 @@
     <title>لوحة تحكم Mercon </title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth-header.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
@@ -35,7 +36,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="customers.html">
                             <i class="fas fa-users"></i>
                             <span>العملاء</span>
                         </a>
@@ -95,6 +96,10 @@
                         <img src="images/avatar.jpg" alt="صورة المستخدم">
                         <span>مرحباً، أحمد</span>
                     </div>
+                    <button class="btn-logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </button>
                 </div>
             </header>
 
@@ -196,5 +201,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

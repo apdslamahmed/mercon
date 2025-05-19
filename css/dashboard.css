@@ -384,10 +384,13 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding: 20px;
     background-color: white;
-    padding: 15px 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-search {
@@ -416,6 +419,74 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.header-actions .notifications {
+    position: relative;
+    cursor: pointer;
+}
+
+.header-actions .notifications i {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.header-actions .notifications .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+}
+
+.header-actions .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+}
+
+.header-actions .user-profile:hover {
+    background-color: #f0f4f8;
+}
+
+.header-actions .user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header-actions .user-profile span {
+    color: #333;
+    font-weight: 500;
+}
+
+.btn-logout {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #c82333;
+}
+
+.btn-logout i {
+    font-size: 1rem;
 }
 
 .notifications {
