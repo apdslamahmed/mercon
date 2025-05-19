@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم Mercon </title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Mercon</h2>
+                <p>لوحة التحكم</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#">
+                            <i class="fas fa-chart-line"></i>
+                            <span>لوحة الإحصائيات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dashboard-product.html">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>المنتجات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>الطلبات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span>العملاء</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">
+                            <i class="fas fa-funnel-dollar"></i>
+                            <span>أدوات التسويق</span>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>إعدادات المتجر</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">
+                            <i class="fas fa-wallet"></i>
+                            <span>محفظتك</span>
+                        </a>
+                    </li> -->
+                    <!-- <li>
+                        <a href="#">
+                            <i class="fas fa-credit-card"></i>
+                            <span>بيانات الدفع</span>
+                        </a>
+                    </li> -->
+                    <!-- <li>
+                        <a href="#">
+                            <i class="fas fa-headset"></i>
+                            <span>الدعم الفني</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-view-site">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>عرض الموقع</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
+                </div>
+                <div class="header-actions">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="images/avatar.jpg" alt="صورة المستخدم">
+                        <span>مرحباً، أحمد</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-welcome">
+                <h1>مرحباً بك في لوحة تحكم ميركون</h1>
+                <p>هنا يمكنك إدارة متجرك ومتابعة المبيعات والطلبات</p>
+                <button class="btn-new-product">
+                    <i class="fas fa-plus"></i>
+                    إضافة منتج جديد
+                </button>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>إجمالي المبيعات</h3>
+                        <p class="stat-value">0.00 ج.م</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>إجمالي مبيعات آخر أسبوع</h3>
+                        <p class="stat-value">0.00 ج.م</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>إجمالي مبيعات آخر شهر</h3>
+                        <p class="stat-value">0.00 ج.م</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>طلبات جديدة</h3>
+                        <p class="stat-value">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-sections">
+                <section class="orders-section">
+                    <div class="section-header">
+                        <h2>آخر الطلبات</h2>
+                        <a href="#" class="view-all">عرض الكل</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>اسم العميل</th>
+                                    <th>المنتج</th>
+                                    <th>المقاس</th>
+                                    <th>السعر</th>
+                                    <th>تاريخ الطلب</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- سيتم إضافة الطلبات هنا عبر JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="visits-section">
+                    <div class="section-header">
+                        <h2>زيارات آخر أسبوع</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="sales-section">
+                    <div class="section-header">
+                        <h2>مبيعات آخر أسبوع</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

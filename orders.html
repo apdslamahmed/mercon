@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الطلبات - ميركون</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* أنماط خاصة بصفحة الطلبات */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        .orders-table thead {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .orders-table th {
+            font-weight: 600;
+        }
+
+        .orders-table tbody tr {
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .orders-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .orders-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-new {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-processing {
+            background-color: #fff8e1;
+            color: #ff8f00;
+        }
+
+        .status-shipped {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-delivered {
+            background-color: #e0f2f1;
+            color: #00796b;
+        }
+
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover {
+            color: #ff6b6b;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .order-details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .order-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .order-products {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .update-status {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .status-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .update-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .update-btn:hover {
+            background-color: #ff5252;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button.active {
+            background-color: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 40px 0;
+            color: #777;
+        }
+
+        .no-orders i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>ميركون</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                    <li><a href="dashboard-product.html"><i class="fas fa-box"></i> إدارة المنتج</a></li>
+                    <li><a href="orders.html" class="active"><i class="fas fa-shopping-cart"></i> الطلبات</a></li>
+                    <li><a href="index.html" target="_blank"><i class="fas fa-eye"></i> عرض الموقع</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>إدارة الطلبات</h1>
+                <div class="user-info">
+                    <span>مرحباً، المدير</span>
+                    <img src="https://via.placeholder.com/40" alt="صورة المستخدم">
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>قائمة الطلبات</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="filters">
+                            <div class="filter-group">
+                                <label for="status-filter">الحالة:</label>
+                                <select id="status-filter">
+                                    <option value="all">الكل</option>
+                                    <option value="new">جديد</option>
+                                    <option value="processing">قيد المعالجة</option>
+                                    <option value="shipped">تم الشحن</option>
+                                    <option value="delivered">تم التوصيل</option>
+                                    <option value="cancelled">ملغي</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="date-filter">التاريخ:</label>
+                                <input type="date" id="date-filter">
+                            </div>
+                            <div class="filter-group">
+                                <label for="search-filter">بحث:</label>
+                                <input type="text" id="search-filter" placeholder="اسم العميل أو رقم الطلب">
+                            </div>
+                        </div>
+
+                        <div id="orders-table-container">
+                            <!-- سيتم تحميل جدول الطلبات هنا عبر JavaScript -->
+                        </div>
+
+                        <div class="pagination" id="pagination">
+                            <!-- سيتم إنشاء أزرار الصفحات هنا عبر JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة تفاصيل الطلب -->
+    <div class="order-details-modal" id="orderDetailsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>تفاصيل الطلب <span id="orderIdDisplay"></span></h2>
+            
+            <div class="order-details-grid">
+                <div>
+                    <strong>اسم العميل:</strong>
+                    <p id="customerName"></p>
+                </div>
+                <div>
+                    <strong>رقم الهاتف:</strong>
+                    <p id="customerPhone"></p>
+                </div>
+                <div>
+                    <strong>العنوان:</strong>
+                    <p id="customerAddress"></p>
+                </div>
+                <div>
+                    <strong>تاريخ الطلب:</strong>
+                    <p id="orderDate"></p>
+                </div>
+                <div>
+                    <strong>حالة الطلب:</strong>
+                    <p id="orderStatus"></p>
+                </div>
+                <div>
+                    <strong>إجمالي الطلب:</strong>
+                    <p id="orderTotal"></p>
+                </div>
+            </div>
+
+            <div class="order-products">
+                <h3>المنتجات</h3>
+                <div id="orderProducts">
+                    <!-- سيتم إضافة المنتجات هنا عبر JavaScript -->
+                </div>
+            </div>
+
+            <div class="update-status">
+                <h3>تحديث حالة الطلب</h3>
+                <select id="updateStatusSelect" class="status-select">
+                    <option value="new">جديد</option>
+                    <option value="processing">قيد المعالجة</option>
+                    <option value="shipped">تم الشحن</option>
+                    <option value="delivered">تم التوصيل</option>
+                    <option value="cancelled">ملغي</option>
+                </select>
+                <button id="updateStatusBtn" class="update-btn">تحديث الحالة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/orders.js"></script>
+</body>
+</html>
